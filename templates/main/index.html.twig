@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+
+    <img src="{{ asset('images/generals/mask-drole.jpg') }}" alt="img-mask-1"
+         class="img-thumbnail rounded mx-auto d-block col-md-6 col-lg-2 mt-4">
+
+    <h1 class="text-center mt-5">Bienvenue
+        {% if app.user %} {{ app.user.lastName }} {{ app.user.firstName }} {% endif %}
+        sur le site de demande de masque</h1>
+
+    {% if is_granted('ROLE_MANAGER') == true %}
+        <div class="text-center mt-4">
+            <p>Vous êtes authentifié comme employé de la mairie.</p>
+        </div>
+    {% endif %}
+
+    <p class="text-center mt-5">Pour lutter contre le Covid, votre super mairie a créé ce magnifique
+        site pour que vous puissiez commander gratuitement vos masques!</p>
+
+    {% if app.user == false %}
+
+        <div class="row mt-5 d-flex justify-content-around"">
+        <a href="/register" class="card-link col-12 col-md-6 col-lg-3">
+
+            <div class="card">
+                <img class="card-img-top" src="{{ asset('images/generals/register.jpg') }}"
+                     alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">S'enregistrer</h5>
+                    <p class="card-text">Enregistrez-vous afin d'accéder au monde féérique de votre mairie.</p>
+                </div>
+            </div>
+        </a>
+
+        <a href="/login" class="card-link col-12 col-md-6 col-lg-3">
+
+            <div class="card">
+                <img class="card-img-top" src="{{ asset('images/generals/login.jpg') }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">S'authentifier</h5>
+                    <p class="card-text">Authentifiez-vous pour faire / suivre vos demandes de masque afin de devenir
+                        sexy et protégé.</p>
+                </div>
+
+            </div>
+        </a>
+
+        </div>
+
+    {% else %}
+
+        <div class="row mt-5 d-flex justify-content-around"">
+        <a href="/profil" class="card-link col-12 col-md-6 col-lg-3">
+
+            <div class="card">
+
+                {% set imagePath = 'images/profil/' ~ app.user.imageFileName %}
+
+                <img class="card-img-top" src="{{ asset(imagePath) }}"
+                     alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Profil</h5>
+                    <p class="card-text">Vérifiez vos informations personnelles.</p>
+                </div>
+            </div>
+        </a>
+
+        <a href="/demand" class="card-link col-12 col-md-6 col-lg-3">
+
+            <div class="card">
+                <img class="card-img-top" src="{{ asset('images/generals/mask-demand.jpg') }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Faire / Voir vos demandes</h5>
+                    <p class="card-text">Faites vos demandes et croisez les doigts qu'un gentil personnel de la mairie
+                        vous l'accorde.</p>
+                </div>
+
+            </div>
+        </a>
+
+
+        {% if is_granted('ROLE_MANAGER') == true %}
+
+
+            <a href="/gestion/demands" class="card-link col-12 col-md-6 col-lg-3">
+
+                <div class="card">
+                    <img class="card-img-top" src="{{ asset('images/generals/gestion-mask.jpg') }}"
+                         alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Gérer les demandes des administrés</h5>
+                        <p class="card-text">Ici tu es le maître! Tu as le pouvoir de décider qui aura les
+                            préééécieux!!!!</p>
+                    </div>
+
+                </div>
+            </a>
+
+
+        {% endif %}
+
+        <a href="/login" class="card-link col-12 col-md-6 col-lg-3">
+
+            <div class="card">
+                <img class="card-img-top" src="{{ asset('images/generals/sad-mask.jpg') }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Se déconnecter</h5>
+                    <p class="card-text">Vous nous quittez déjà?</p>
+                </div>
+
+            </div>
+        </a>
+
+
+        </div>
+    {% endif %}
+
+{% endblock %}
