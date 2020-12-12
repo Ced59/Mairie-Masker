@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+
+    <h1 class="text-center mt-5 mb-2">Administration des utilisateurs</h1>
+
+    <div class="text-center mb-3 mt-4">
+        {% if listUsers.getTotalItemCount == 1 %}
+            <p>Il y a {{ listUsers.getTotalItemCount }} utilisateur du service.</p>
+        {% else %}
+            <p>Il y a {{ listUsers.getTotalItemCount }} utilisateurs du service.</p>
+        {% endif %}
+    </div>
+
+    <table class="table mt-5">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Utilisateurs</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Adresse mail</th>
+            <th scope="col">Nbre demandes</th>
+            <th scope="col">Statut</th>
+            <th scope="col">Rôle</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for user in listUsers %}
+
+            {% set imagePath = 'images/profil/' ~ user.imageFileName %}
+
+            <tr>
+                <th scope="row">
+                    <img class="rounded-circle img-thumbnail"
+                         style="max-width: 50px"
+                         src="{{ asset(imagePath) }}"
+                         alt="Photo de profil">
+                </th>
+                <td>{{ user.lastName }}</td>
+                <td>{{ user.firstName }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.demands | length }}</td>
+                <td>
+                    {% if user.isVerified == true %}
+                        Vérifié
+                    {% else %}
+                        Non vérifié
+                    {% endif %}
+                </td>
+                <td>
+                    {% if 'ROLE_SUPER_ADMIN' in user.roles %}
+                        Dieu
+                    {% elseif 'ROLE_MANAGER' in user.roles %}
+                        Employé de mairie
+                    {% else %}
+                        Mouton
+                    {% endif %}
+                </td>
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-center mb-3 mt-5">
+        {{ knp_pagination_render(listUsers) }}
+    </div>
+
+    <div class="text-center mb-5">
+        <a class="btn btn-info align-content-center" href="/">Retour</a>
+    </div>
+
+
+{% endblock %}

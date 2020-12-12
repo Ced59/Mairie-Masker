@@ -3,7 +3,7 @@
 {% block title %}Hello ProfilController!{% endblock %}
 
 {% block body %}
-    <h1 class="text-center mt-4">Votre profil</h1>
+    <h1 class="text-center mt-4 mb-4">{{ titleProfil }}</h1>
 
     <div class="col-md offset-lg-2 col-lg-8">
         <div class="card">
@@ -43,9 +43,15 @@
                     {% endif %}
                 </div>
 
-
             </div>
+
+            <p class="card-text alert-danger mt-4 p-2 m-2 text-center">Pour toute modification de votre profil, veuillez contacter votre gentil personnel de mairie. Merci.</p>
+
         </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <a class="btn btn-info align-content-center" href="/">Retour</a>
     </div>
 
 {% endblock %}

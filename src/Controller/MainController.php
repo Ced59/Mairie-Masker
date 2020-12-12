@@ -18,29 +18,13 @@ class MainController extends AbstractController
      */
     public function index(): Response
     {
+
+
+
         return $this->render('main/index.html.twig', [
-            'controller_name' => 'Mon Grand Fou',
+            'title' => 'Accueil',
         ]);
     }
 
-    /**
-     * @Route("/search/{query<\d*>}", name="search" , priority=5)
-     * @IsGranted("ROLE_USER")
-     */
-    public function search(int $query = 1): Response
-    {
-        return $this->render('main/search.html.twig', [
-            'query' => $query
-        ]);
-    }
 
-    /**
-     * @Route("/search/22", name="search22")
-     */
-    public function search22(): Response
-    {
-        return $this->render('main/search.html.twig', [
-            'query' => 42
-        ]);
-    }
 }

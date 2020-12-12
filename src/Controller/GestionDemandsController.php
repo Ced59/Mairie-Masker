@@ -25,7 +25,7 @@ class GestionDemandsController extends AbstractController
             ->findBy(
                 ['acceptation' => false],
                 ['date' => 'ASC']
-            );;
+            );
 
         $pageNumber = $request->query->getInt('page', 1);
 

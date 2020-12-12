@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Demand;
 use App\Repository\DemandRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -12,20 +14,32 @@ class DemandController extends AbstractController
 {
     /**
      * @Route("/demand", name="demand")
-     * @param DemandRepository $demandRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      */
-    public function index(DemandRepository $demandRepository): Response
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
         $user = $this->getUser();
         $demands = $user->getDemands();
 
+
+        $pageNumber = $request->query->getInt('page', 1);
+
+        $demandsPaginated = $paginator->paginate(
+            $demands,
+            $pageNumber,
+            4
+        );
+
         return $this->render('demand/index.html.twig', [
             'title' => 'Faire une demande',
             'demandCreated' => false,
-            'demands' => $demands
+            'demands' => $demandsPaginated,
+            'allDemands' => $demands
         ]);
     }
+
 
     /**
      * @Route("/demand/validate", name="demand_validate")

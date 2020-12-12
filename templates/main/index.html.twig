@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block body %}
 
@@ -11,7 +11,13 @@
         {% if app.user %} {{ app.user.lastName }} {{ app.user.firstName }} {% endif %}
         sur le site de demande de masque</h1>
 
-    {% if is_granted('ROLE_MANAGER') == true %}
+    {% if is_granted('ROLE_SUPER_ADMIN') == true %}
+        <div class="text-center mt-4">
+            <p>Vous êtes authentifié comme Dieu.</p>
+        </div>
+
+
+    {% elseif is_granted('ROLE_MANAGER') == true %}
         <div class="text-center mt-4">
             <p>Vous êtes authentifié comme employé de la mairie.</p>
         </div>
@@ -23,7 +29,7 @@
     {% if app.user == false %}
 
         <div class="row mt-5 d-flex justify-content-around"">
-        <a href="/register" class="card-link col-12 col-md-6 col-lg-3">
+        <a href="/register" class="card-link col-12 col-md-6 col-lg-3 mt-4 mb-5">
 
             <div class="card">
                 <img class="card-img-top" src="{{ asset('images/generals/register.jpg') }}"
@@ -35,7 +41,7 @@
             </div>
         </a>
 
-        <a href="/login" class="card-link col-12 col-md-6 col-lg-3">
+        <a href="/login" class="card-link col-12 col-md-6 col-lg-3 mt-4 mb-5">
 
             <div class="card">
                 <img class="card-img-top" src="{{ asset('images/generals/login.jpg') }}" alt="Card image cap">
@@ -52,8 +58,8 @@
 
     {% else %}
 
-        <div class="row mt-5 d-flex justify-content-around"">
-        <a href="/profil" class="card-link col-12 col-md-6 col-lg-3">
+        <div class="row mt-5 d-flex justify-content-around">
+        <a href="/profil" class="card-link col-12 col-md-6 col-lg-3 mt-4 mb-5">
 
             <div class="card">
 
@@ -68,7 +74,7 @@
             </div>
         </a>
 
-        <a href="/demand" class="card-link col-12 col-md-6 col-lg-3">
+        <a href="/demand" class="card-link col-12 col-md-6 col-lg-3 mt-4 mb-5">
 
             <div class="card">
                 <img class="card-img-top" src="{{ asset('images/generals/mask-demand.jpg') }}" alt="Card image cap">
@@ -85,7 +91,7 @@
         {% if is_granted('ROLE_MANAGER') == true %}
 
 
-            <a href="/gestion/demands" class="card-link col-12 col-md-6 col-lg-3">
+            <a href="/gestion/demands" class="card-link col-12 col-md-6 col-lg-3 mt-4 mb-5">
 
                 <div class="card">
                     <img class="card-img-top" src="{{ asset('images/generals/gestion-mask.jpg') }}"
@@ -99,10 +105,23 @@
                 </div>
             </a>
 
+            <a href="/gestion/listUsers" class="card-link col-12 col-md-6 col-lg-3 mt-4 mb-5">
+
+                <div class="card">
+                    <img class="card-img-top" src="{{ asset('images/generals/beeeeeehhhhhh.jpg') }}"
+                         alt="Beeeeehhhhhhh">
+                    <div class="card-body">
+                        <h5 class="card-title">Voir la liste des utilisateurs</h5>
+                        <p class="card-text">Surveille les éventuels moutons noirs.....</p>
+                    </div>
+
+                </div>
+            </a>
+
 
         {% endif %}
 
-        <a href="/login" class="card-link col-12 col-md-6 col-lg-3">
+        <a href="/login" class="card-link col-12 col-md-6 col-lg-3 mt-4 mb-5">
 
             <div class="card">
                 <img class="card-img-top" src="{{ asset('images/generals/sad-mask.jpg') }}" alt="Card image cap">
