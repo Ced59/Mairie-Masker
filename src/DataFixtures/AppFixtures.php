@@ -8,6 +8,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use function Sodium\add;
 
 class AppFixtures extends Fixture
 {
@@ -20,14 +21,13 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        // $product = new Product();
-        // $manager->persist($product);
+
 
         $faker = Factory::create('fr_FR');
 
         $user = new User();
         $hash = $this->encoder->encodePassword($user, 'password');
-        $user->setRoles(['ROLE_USER', 'ROLE_MANAGER'])
+        $user->setRoles(['ROLE_USER', 'ROLE_MANAGER', 'ROLE_SUPER_ADMIN'])
             ->setEmail('c.caudron59@gmail.com')
             ->setFirstName('Cedric')
             ->setLastName('Caudron')
@@ -43,10 +43,14 @@ class AppFixtures extends Fixture
         for ($d = 0; $d < 10; $d++) {
             $dateDemand = $faker->dateTimeBetween('2019-03-20T00:00:00.012345Z', 'now');
 
+            $dateRecovery = clone $dateDemand;
+            $dateRecovery = $dateRecovery->add(new \DateInterval('PT50M'));
+
             $demand = new Demand();
             $demand->setUser($user)
                 ->setAcceptation(true)
-                ->setDate($dateDemand);
+                ->setDate($dateDemand)
+                ->setDateMaskRecovery($dateRecovery);;
 
             $manager->persist($demand);
         }
@@ -76,10 +80,15 @@ class AppFixtures extends Fixture
         for ($d = 0; $d < 10; $d++) {
             $dateDemand = $faker->dateTimeBetween('2019-03-20T00:00:00.012345Z', 'now');
 
+
+            $dateRecovery = clone $dateDemand;
+            $dateRecovery = $dateRecovery->add(new \DateInterval('PT40M'));
+
             $demand = new Demand();
             $demand->setUser($user)
                 ->setAcceptation(true)
-                ->setDate($dateDemand);
+                ->setDate($dateDemand)
+                ->setDateMaskRecovery($dateRecovery);;
 
             $manager->persist($demand);
         }
@@ -119,10 +128,14 @@ class AppFixtures extends Fixture
             for ($d = 0; $d < mt_rand(0, 30); $d++) {
                 $dateDemand = $faker->dateTimeBetween('2019-03-20T00:00:00.012345Z', 'now');
 
+                $dateRecovery = clone $dateDemand;
+                $dateRecovery = $dateRecovery->add(new \DateInterval('PT30M'));
+
                 $demand = new Demand();
                 $demand->setUser($user)
                     ->setAcceptation(true)
-                    ->setDate($dateDemand);
+                    ->setDate($dateDemand)
+                    ->setDateMaskRecovery($dateRecovery);
 
                 $manager->persist($demand);
             }

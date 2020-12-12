@@ -33,6 +33,11 @@ class Demand
      */
     private $acceptation;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateMaskRecovery;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +75,18 @@ class Demand
     public function setAcceptation(bool $acceptation): self
     {
         $this->acceptation = $acceptation;
+
+        return $this;
+    }
+
+    public function getDateMaskRecovery(): ?\DateTimeInterface
+    {
+        return $this->dateMaskRecovery;
+    }
+
+    public function setDateMaskRecovery(?\DateTimeInterface $dateMaskRecovery): self
+    {
+        $this->dateMaskRecovery = $dateMaskRecovery;
 
         return $this;
     }
