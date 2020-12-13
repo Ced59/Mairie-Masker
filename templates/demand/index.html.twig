@@ -7,7 +7,6 @@
         <h1 class="text-center">Bienvenue {{ app.user.lastName }} {{ app.user.firstName }}</h1>
 
 
-
         {% if demandCreated == false %}
 
             {% if demands | length > 0 %}
@@ -20,6 +19,7 @@
                         <th scope="col">Votre dernière demande</th>
                         <th scope="col">Date</th>
                         <th scope="col">Acceptée</th>
+                        <th scope="col">Date de récupération en Mairie</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -27,6 +27,13 @@
                         <th scope="row"></th>
                         <td>{{ lastDemand.date | format_datetime(locale='fr') }}</td>
                         <td>{% if lastDemand.acceptation %} Oui {% else %} Non {% endif %}</td>
+                        <td>
+                            {% if lastDemand.dateMaskRecovery != null %}
+                                {{ lastDemand.dateMaskRecovery | format_datetime(locale='fr') }}
+                            {% else %}
+                                Bientôt
+                            {% endif %}
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -53,28 +60,28 @@
 
 
 
-                <table class="table mt-5">
-                    <thead class="thead-dark">
+            <table class="table mt-5">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Votre historique de demandes</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Acceptée</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for demand in demands %}
+
                     <tr>
-                        <th scope="col">Votre historique de demandes</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Acceptée</th>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ demand.date | format_datetime(locale='fr') }}</td>
+                        <td>{% if demand.acceptation %} Oui {% else %} Non {% endif %}</td>
                     </tr>
-                    </thead>
-                    <tbody>
 
-                    {% for demand in demands %}
+                {% endfor %}
 
-                        <tr>
-                            <th scope="row">{{ loop.index }}</th>
-                            <td>{{ demand.date | format_datetime(locale='fr') }}</td>
-                            <td>{% if demand.acceptation %} Oui {% else %} Non {% endif %}</td>
-                        </tr>
-
-                    {% endfor %}
-
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
 
             <div class="d-flex justify-content-center mb-3 mt-5">
                 {{ knp_pagination_render(demands) }}
