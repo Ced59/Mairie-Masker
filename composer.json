@@ -2,7 +2,7 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": ">=7.2.5",
+        "php": "7.3.20",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "components/jquery": "^3.5",
